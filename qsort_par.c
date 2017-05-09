@@ -11,7 +11,7 @@
 #define KILO (1024)
 #define MEGA (1024*1024)
 #define MAX_ITEMS 100000 // (64*MEGA)
-
+#define OMP_THREAD_LIMIT 8
 #define swap(v, a, b) {unsigned tmp; tmp=v[a]; v[a]=v[b]; v[b]=tmp;}
 
 static int *v;
@@ -82,7 +82,7 @@ quick_sort(int *v, unsigned low, unsigned high)
     /* partition the vector */
     pivot_index = partition(v, low, high, pivot_index);
 
-
+	printf("Hello world!\n");
     /* sort the two sub arrays */
 	#pragma omp parallel shared(v, low, high, pivot_index) num_threads(2)
 	{
