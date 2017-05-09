@@ -140,6 +140,7 @@ quick_sortPar(int *v, unsigned low, unsigned high, unsigned threadLimit)
 int
 main(int argc, char **argv)
 {
+	omp_set_nested(1);
     init_array();
    // print_array();
     quick_sortPar(v, 0, MAX_ITEMS-1, 8);
