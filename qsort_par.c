@@ -108,7 +108,7 @@ quick_sortPar(int *v, unsigned low, unsigned high, unsigned threadLimit)
 
 	if (threadLimit > 0)
 	{
-	#pragma omp parallel firstprivate(v, low, high, pivot_index, threadLimit) num_threads(2)
+	#pragma omp parallel shared(v, low, high, pivot_index, threadLimit) num_threads(2)
 	{
 		#pragma omp sections
 		{
