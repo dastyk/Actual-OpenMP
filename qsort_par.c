@@ -11,6 +11,8 @@
 #define KILO (1024)
 #define MEGA (1024*1024)
 #define MAX_ITEMS 100000 // (64*MEGA)
+
+#define OMP_THREAD_LIMIT 8
 #define swap(v, a, b) {unsigned tmp; tmp=v[a]; v[a]=v[b]; v[b]=tmp;}
 
 static int *v;
