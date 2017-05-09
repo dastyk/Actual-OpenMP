@@ -32,7 +32,7 @@ init_array(void)
 
     v = (int *) malloc(MAX_ITEMS*sizeof(int));
     for (i = 0; i < MAX_ITEMS; i++)
-        v[i] = rand() % 100;
+        v[i] = rand();
 }
 
 static unsigned
@@ -92,8 +92,8 @@ int
 main(int argc, char **argv)
 {
     init_array();
- //   print_array();
+    //print_array();
     quick_sort(v, 0, MAX_ITEMS-1);
- //   print_array();
+    //print_array();
 }
 
