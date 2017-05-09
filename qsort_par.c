@@ -11,10 +11,11 @@
 #define KILO (1024)
 #define MEGA (1024*1024)
 #define MAX_ITEMS 100000 // (64*MEGA)
-
+#define MAX_THREADS 8
 #define swap(v, a, b) {unsigned tmp; tmp=v[a]; v[a]=v[b]; v[b]=tmp;}
 
 static int *v;
+static int numThreads;
 
 static void
 print_array(void)
@@ -68,10 +69,10 @@ partition(int *v, unsigned low, unsigned high, unsigned pivot_index)
 }
 
 static void
-quick_sort(int *v, unsigned low, unsigned high)
+quick_sortPar(int *v, unsigned low, unsigned high)
 {
     unsigned pivot_index;
-    
+	int cThreads = 0;
     /* no need to sort a vector of zero or one element */
     if (low >= high)
         return;
@@ -84,19 +85,84 @@ quick_sort(int *v, unsigned low, unsigned high)
 
 	printf("Hello world!\n");
     /* sort the two sub arrays */
-	#pragma omp parallel shared(v, low, high, pivot_index) num_threads(2)
+
+#pragma omp critical
+	{
+		if (numThreads < MAX_THREADS)
+		{
+			numThreads++;
+			printf("Num Threads: %d\n", numThreads);
+			cThreads = 1;
+		}
+	}
+
+	if (cThreads)
+	{
+	#pragma omp parallel shared(v, low, high, pivot_index, numThreads) num_threads(2)
 	{
 		#pragma omp sections
 		{
 			#pragma omp section
 			{			
 				if (low < pivot_index)
-					quick_sort(v, low, pivot_index - 1);				
+					quick_sortPar(v, low, pivot_index - 1);
 			}
 			#pragma omp section
 			{
 				if (pivot_index < high)
-					quick_sort(v, pivot_index + 1, high);
+					quick_sortPar(v, pivot_index + 1, high);
+			}
+		}
+	}
+	}
+	else
+	{
+		if (low < pivot_index)
+			quick_sortPar(v, low, pivot_index - 1);
+		if (pivot_index < high)
+			quick_sortPar(v, pivot_index + 1, high);
+	}
+	if (cThreads)
+	{
+		#pragma omp critical
+		{
+				numThreads--;
+				printf("Num Threads: %d\n", numThreads);
+		}
+	}
+}
+
+
+static void
+quick_sort(int *v, unsigned low, unsigned high)
+{
+	unsigned pivot_index;
+
+	/* no need to sort a vector of zero or one element */
+	if (low >= high)
+		return;
+
+	/* select the pivot value */
+	pivot_index = (low + high) / 2;
+
+	/* partition the vector */
+	pivot_index = partition(v, low, high, pivot_index);
+
+	numThreads = 2;
+	printf("Num Threads: %d\n", numThreads);
+	#pragma omp parallel shared(v, low, high, pivot_index, numThreads) num_threads(2)
+	{
+		#pragma omp sections
+		{
+			#pragma omp section
+			{
+				if (low < pivot_index)
+					quick_sortPar(v, low, pivot_index - 1);
+			}
+			#pragma omp section
+			{
+				if (pivot_index < high)
+					quick_sortPar(v, pivot_index + 1, high);
 			}
 		}
 	}
@@ -105,10 +171,9 @@ quick_sort(int *v, unsigned low, unsigned high)
 int
 main(int argc, char **argv)
 {
-	printf("%d\n", omp_get_thread_limit());
     init_array();
-   // print_array();
-  //  quick_sort(v, 0, MAX_ITEMS-1);
-//	print_array();
+    print_array();
+    quick_sort(v, 0, MAX_ITEMS-1);
+	print_array();
 }
 
