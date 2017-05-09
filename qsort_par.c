@@ -34,7 +34,7 @@ init_array(void)
 
     v = (int *) malloc(MAX_ITEMS*sizeof(int));
     for (i = 0; i < MAX_ITEMS; i++)
-        v[i] = rand() % 100;
+        v[i] = rand();
 }
 
 static unsigned
