@@ -91,11 +91,13 @@ quick_sort(int *v, unsigned low, unsigned high)
 		{
 			#pragma omp section
 			{
+				printf("Thread starting low");
 				if (low < pivot_index)
 					quick_sort(v, low, pivot_index - 1);
 			}
 			#pragma omp section
 			{
+				printf("Thread starting high");
 				if (pivot_index < high)
 					quick_sort(v, pivot_index + 1, high);
 			}
