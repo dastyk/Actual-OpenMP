@@ -105,9 +105,10 @@ quick_sort(int *v, unsigned low, unsigned high)
 int
 main(int argc, char **argv)
 {
+	printf("%d\n", omp_get_thread_limit());
     init_array();
    // print_array();
-    quick_sort(v, 0, MAX_ITEMS-1);
+  //  quick_sort(v, 0, MAX_ITEMS-1);
 //	print_array();
 }
 
