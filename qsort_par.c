@@ -3,7 +3,7 @@
  * Sequential version of Quick sort
  *
  ***************************************************************************/
-
+// Time 9.257
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
@@ -108,7 +108,7 @@ quick_sortPar(int *v, unsigned low, unsigned high, unsigned threadLimit)
 
 	if (threadLimit > 0)
 	{
-	#pragma omp parallel shared(v, low, high, pivot_index, threadLimit) num_threads(2)
+	#pragma omp parallel firstprivate(v, low, high, pivot_index, threadLimit) num_threads(2)
 	{
 		#pragma omp sections
 		{
@@ -143,7 +143,7 @@ main(int argc, char **argv)
 	omp_set_nested(1);
     init_array();
    // print_array();
-    quick_sortPar(v, 0, MAX_ITEMS-1, 8);
+    quick_sortPar(v, 0, MAX_ITEMS-1, 16);
 	//print_array();
 }
 
