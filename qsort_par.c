@@ -15,7 +15,7 @@
 #define swap(v, a, b) {unsigned tmp; tmp=v[a]; v[a]=v[b]; v[b]=tmp;}
 
 static int *v;
-static int threadCount
+
 static void
 print_array(void)
 {
