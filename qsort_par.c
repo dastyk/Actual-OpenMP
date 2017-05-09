@@ -10,7 +10,7 @@
 
 #define KILO (1024)
 #define MEGA (1024*1024)
-#define MAX_ITEMS (64*MEGA)
+#define MAX_ITEMS 100000 // (64*MEGA)
 
 #define swap(v, a, b) {unsigned tmp; tmp=v[a]; v[a]=v[b]; v[b]=tmp;}
 
@@ -107,8 +107,8 @@ main(int argc, char **argv)
 {
 	omp_set_nested(1);
     init_array();
-    print_array();
+   // print_array();
     quick_sort(v, 0, MAX_ITEMS-1);
-	print_array();
+//	print_array();
 }
 
