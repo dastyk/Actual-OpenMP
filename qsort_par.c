@@ -4,8 +4,6 @@
  *
  ***************************************************************************/
 
-#define OMP_NESTED
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
@@ -17,7 +15,7 @@
 #define swap(v, a, b) {unsigned tmp; tmp=v[a]; v[a]=v[b]; v[b]=tmp;}
 
 static int *v;
-
+static int threadCount
 static void
 print_array(void)
 {
@@ -91,14 +89,12 @@ quick_sort(int *v, unsigned low, unsigned high)
 		#pragma omp sections
 		{
 			#pragma omp section
-			{
-				printf("Thread starting low\n");
+			{			
 				if (low < pivot_index)
-					quick_sort(v, low, pivot_index - 1);
+					quick_sort(v, low, pivot_index - 1);				
 			}
 			#pragma omp section
 			{
-				printf("Thread starting high\n");
 				if (pivot_index < high)
 					quick_sort(v, pivot_index + 1, high);
 			}
@@ -109,6 +105,7 @@ quick_sort(int *v, unsigned low, unsigned high)
 int
 main(int argc, char **argv)
 {
+	omp_set_nested(1);
     init_array();
     print_array();
     quick_sort(v, 0, MAX_ITEMS-1);
