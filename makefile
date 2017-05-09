@@ -1,5 +1,5 @@
 all: par seq
-
+f: clean par seq
 par: 
 	export OMP_NESTED=1
 	gcc -fopenmp -o par qsort_par.c

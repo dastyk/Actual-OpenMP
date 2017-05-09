@@ -171,8 +171,8 @@ int
 main(int argc, char **argv)
 {
     init_array();
-    print_array();
+  //  print_array();
     quick_sort(v, 0, MAX_ITEMS-1);
-	print_array();
+	//print_array();
 }
 
