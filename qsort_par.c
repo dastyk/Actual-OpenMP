@@ -84,9 +84,9 @@ quick_sort(int *v, unsigned low, unsigned high)
     /* partition the vector */
     pivot_index = partition(v, low, high, pivot_index);
 
-	printf("Sort sub arrays\n");
+
     /* sort the two sub arrays */
-	/*#pragma omp parallel shared(v, low, high, pivot_index) num_threads(2)
+	#pragma omp parallel shared(v, low, high, pivot_index) num_threads(2)
 	{
 		#pragma omp sections
 		{
@@ -103,7 +103,7 @@ quick_sort(int *v, unsigned low, unsigned high)
 					quick_sort(v, pivot_index + 1, high);
 			}
 		}
-	}*/
+	}
 }
 
 int
