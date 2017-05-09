@@ -83,7 +83,6 @@ quick_sortPar(int *v, unsigned low, unsigned high)
     /* partition the vector */
     pivot_index = partition(v, low, high, pivot_index);
 
-	printf("Hello world!\n");
     /* sort the two sub arrays */
 
 #pragma omp critical
