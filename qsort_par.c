@@ -90,7 +90,6 @@ quick_sortPar(int *v, unsigned low, unsigned high)
 		if (numThreads < MAX_THREADS)
 		{
 			numThreads++;
-			printf("Num Threads: %d\n", numThreads);
 			cThreads = 1;
 		}
 	}
@@ -126,7 +125,7 @@ quick_sortPar(int *v, unsigned low, unsigned high)
 		#pragma omp critical
 		{
 				numThreads--;
-				printf("Num Threads: %d\n", numThreads);
+	
 		}
 	}
 }
@@ -148,7 +147,6 @@ quick_sort(int *v, unsigned low, unsigned high)
 	pivot_index = partition(v, low, high, pivot_index);
 
 	numThreads = 2;
-	printf("Num Threads: %d\n", numThreads);
 	#pragma omp parallel shared(v, low, high, pivot_index, numThreads) num_threads(2)
 	{
 		#pragma omp sections
