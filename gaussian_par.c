@@ -47,18 +47,19 @@ work(void)
     int i, j, k;
 
 
-	#pragma omp parallel num_threads(8) firstprivate(N) shared(A, b, y)
+	#pragma omp parallel num_threads(8) shared(A, b, y, N)
 	{
 		for (k = 0; k < N; k++) { /* Outer loop */
 			#pragma omp single
 			{
+				printf("Iter: %d\n", k)
 				for (j = k + 1; j < N; j++)
 					A[k][j] = A[k][j] / A[k][k]; /* Division step */
 				y[k] = b[k] / A[k][k];
 				A[k][k] = 1.0;
 			}
 			#pragma omp barrier
-			#pragma omp for schedule(guided)
+			#pragma omp for schedule(static)
 			for (i = k + 1; i < N; i++) {
 				for (j = k + 1; j < N; j++)
 					A[i][j] = A[i][j] - A[i][k] * A[k][j]; /* Elimination step */
