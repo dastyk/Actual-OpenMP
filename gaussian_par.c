@@ -46,13 +46,11 @@ work(void)
 {
     int i, j, k;
 
-	printf("N: %d\n", N);
 	#pragma omp parallel private(i,j,k) num_threads(8) shared(A, b, y, N)
 	{
 		for (k = 0; k < N; k++) { /* Outer loop */
 			#pragma omp single
 			{
-				printf("Iter: %d\n", k);
 				for (j = k + 1; j < N; j++)
 					A[k][j] = A[k][j] / A[k][k]; /* Division step */
 				y[k] = b[k] / A[k][k];
