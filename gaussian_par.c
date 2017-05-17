@@ -46,7 +46,7 @@ work(void)
 {
     int i, j, k;
 
-
+	printf("N: %d\n", N);
 	#pragma omp parallel num_threads(8) shared(A, b, y, N)
 	{
 		for (k = 0; k < N; k++) { /* Outer loop */
