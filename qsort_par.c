@@ -143,7 +143,7 @@ main(int argc, char **argv)
 	omp_set_nested(1); // So that we can use nested parallel
     init_array();
    // print_array();
-    quick_sortPar(v, 0, MAX_ITEMS-1, 8);
+    quick_sortPar(v, 0, MAX_ITEMS-1, 4);
 	//print_array();
 }
 
