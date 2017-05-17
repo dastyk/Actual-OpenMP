@@ -52,7 +52,7 @@ work(void)
 		for (k = 0; k < N; k++) { /* Outer loop */
 			#pragma omp single
 			{
-				printf("Iter: %d\n", k)
+				printf("Iter: %d\n", k);
 				for (j = k + 1; j < N; j++)
 					A[k][j] = A[k][j] / A[k][k]; /* Division step */
 				y[k] = b[k] / A[k][k];
