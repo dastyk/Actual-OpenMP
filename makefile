@@ -1,12 +1,19 @@
-all: par seq
-f: clean par seq
-par: 
+all: qpar qseq gpar gseq
+f: clean qpar qseq gpar gseq
+qpar: 
 	export OMP_NESTED=1
-	gcc -fopenmp -o par qsort_par.c
+	gcc -fopenmp -o qpar qsort_par.c
 
-seq: 
-	gcc -o seq qsort_seq.c
+qseq: 
+	gcc -o qseq qsort_seq.c
 
+gpar:
+	gcc -fopenmp -o gpar gaussian_par.c
+
+gseq:
+	gcc -o gseq gaussian_seq.c
 clean:
-	rm par
-	rm seq
+	rm qpar
+	rm qseq
+	rm gpar
+	rm gseq

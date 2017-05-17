@@ -106,16 +106,16 @@ quick_sortPar(int *v, unsigned low, unsigned high, unsigned threadLimit)
 
     /* sort the two sub arrays */
 
-	if (threadLimit > 0)
+	if (threadLimit > 0) // Only create a limited number of threads.
 	{
-	#pragma omp parallel firstprivate(v, low, high, pivot_index, threadLimit) num_threads(2)
+	#pragma omp parallel firstprivate(v, low, high, pivot_index, threadLimit) num_threads(2) // create two threads
 	{
 		#pragma omp sections
 		{
-			#pragma omp section
+			#pragma omp section // One section for each thread
 			{			
 				if (low < pivot_index)
-					quick_sortPar(v, low, pivot_index - 1, threadLimit - 1);
+					quick_sortPar(v, low, pivot_index - 1, threadLimit - 1); // Also decrement the thread limit
 			}
 			#pragma omp section
 			{
@@ -140,10 +140,10 @@ quick_sortPar(int *v, unsigned low, unsigned high, unsigned threadLimit)
 int
 main(int argc, char **argv)
 {
-	omp_set_nested(1);
+	omp_set_nested(1); // So that we can use nested parallel
     init_array();
    // print_array();
-    quick_sortPar(v, 0, MAX_ITEMS-1, 16);
+    quick_sortPar(v, 0, MAX_ITEMS-1, 8);
 	//print_array();
 }
 
