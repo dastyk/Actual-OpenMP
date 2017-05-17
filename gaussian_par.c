@@ -57,7 +57,7 @@ work(void)
 				y[k] = b[k] / A[k][k];
 				A[k][k] = 1.0;
 			}
-
+			#pragma omp barrier
 			#pragma omp for schedule(guided)
 			for (i = k + 1; i < N; i++) {
 				for (j = k + 1; j < N; j++)
