@@ -57,7 +57,7 @@ work(void)
 				A[k][k] = 1.0;
 			}
 
-			#pragma omp for schedule(guided)
+			#pragma omp for schedule(static)
 			for (i = k + 1; i < N; i++) {
 				for (j = k + 1; j < N; j++)
 					A[i][j] = A[i][j] - A[i][k] * A[k][j]; /* Elimination step */
